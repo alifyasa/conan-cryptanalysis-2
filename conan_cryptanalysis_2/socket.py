@@ -24,3 +24,9 @@ def get_challenge(recv_socket: socket.socket):
     ciphertext = int(ciphertext)
 
     return paket_soal, rsa_n, rsa_e, ciphertext
+
+ACCESS_TOKEN_PATTERN = r'Token akses nomor arsip: (\d*)'
+def get_access_token(recv_socket: socket.socket):
+    msg = get_all_messages(recv_socket, "Masukkan perintah: ")
+    access_token = re.search(ACCESS_TOKEN_PATTERN, msg).group(1)
+    return int(access_token)
