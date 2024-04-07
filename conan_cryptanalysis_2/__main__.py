@@ -1,8 +1,8 @@
 import socket
 import re
 
-from conan_cryptanalisis_2.socket import get_all_messages, get_challenge
-from conan_cryptanalisis_2.cryptanalysis import (
+from conan_cryptanalysis_2.socket import get_all_messages, get_challenge
+from conan_cryptanalysis_2.cryptanalysis import (
     solve_mode_a,
     solve_mode_b,
     solve_mode_c,
