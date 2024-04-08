@@ -3,5 +3,5 @@
 ## How to Run
 
 ```bash
-python -m conan_cryptanalysis
+python -m conan_cryptanalysis_2
 ```
