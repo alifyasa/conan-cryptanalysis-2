@@ -6,26 +6,27 @@ import time
 
 from conan_cryptanalysis_2.utils import print_header
 from conan_cryptanalysis_2.socket import (
-    get_all_messages, 
-    get_challenge, 
-    get_access_token, 
+    get_all_messages,
+    get_challenge,
+    get_access_token,
     get_admin_archive_number,
-    get_flag
+    get_flag,
 )
 from conan_cryptanalysis_2.cryptanalysis import (
     solve_mode_a,
     solve_mode_b,
     solve_mode_c,
     solve_mode_d,
-    solve_mode_e
+    solve_mode_e,
 )
 
-TOKEN = 'Ovx2cO9i7P'
+TOKEN = "Ovx2cO9i7P"
 
-PART_A_HOST = '165.232.161.196'
+PART_A_HOST = "165.232.161.196"
 PART_A_PORT = 4020
 
 NCOL = 80
+
 
 def part_a():
     print_header("PART A", NCOL)
@@ -55,16 +56,18 @@ def part_a():
             decryped_text = solve_mode_e(rsa_n, rsa_e, ciphertext)
         else:
             print(f"Unexpexted value for paket_soal: {paket_soal}")
-        
+
         # print(decryped_text.decode())
         CLIENT_SOCKET.send(decryped_text)
-    
+
     part_a_flag = get_flag(CLIENT_SOCKET)
     CLIENT_SOCKET.close()
     return part_a_flag
 
-PART_B_HOST = '165.232.161.196'
+
+PART_B_HOST = "165.232.161.196"
 PART_B_PORT = 1303
+
 
 def part_b():
     print_header("PART B", NCOL)
@@ -80,38 +83,35 @@ def part_b():
     # Chosen Plaintext: 2
     print_header("GETTING CIPHERTEXT FOR PLAINTEXT '2'", NCOL, "-")
     get_all_messages(CLIENT_SOCKET, "Masukkan perintah: ")
-    CLIENT_SOCKET.send(b'1')
+    CLIENT_SOCKET.send(b"1")
 
     get_all_messages(CLIENT_SOCKET, "Masukkan nomor arsip (dalam bentuk integer): ")
-    CLIENT_SOCKET.send(b'2')
-    
+    CLIENT_SOCKET.send(b"2")
+
     get_all_messages(CLIENT_SOCKET, "Masukkan isi arsip: ")
-    CLIENT_SOCKET.send(b'2')
+    CLIENT_SOCKET.send(b"2")
 
     access_token_1 = get_access_token(CLIENT_SOCKET)
 
     # Chosen Plaintext: 3
     print_header("GETTING CIPHERTEXT FOR PLAINTEXT '3'", NCOL, "-")
-    CLIENT_SOCKET.send(b'1')
+    CLIENT_SOCKET.send(b"1")
 
     get_all_messages(CLIENT_SOCKET, "Masukkan nomor arsip (dalam bentuk integer): ")
-    CLIENT_SOCKET.send(b'3')
-    
+    CLIENT_SOCKET.send(b"3")
+
     get_all_messages(CLIENT_SOCKET, "Masukkan isi arsip: ")
-    CLIENT_SOCKET.send(b'3')
+    CLIENT_SOCKET.send(b"3")
 
     access_token_2 = get_access_token(CLIENT_SOCKET)
 
     pubkey_candidates = []
 
-    pow_1 = pow(2, 2 ** 15)
-    pow_2 = pow(3, 2 ** 15)
+    pow_1 = pow(2, 2**15)
+    pow_2 = pow(3, 2**15)
     print_header("BRUTEFORCING PUBLIC KEY", NCOL, "-")
-    for e_guess in tqdm(range(2 ** 15, 2 ** 16 + 1), ncols=NCOL):
-        n_guess = math.gcd(
-            pow_1 - access_token_1, 
-            pow_2 - access_token_2
-        )
+    for e_guess in tqdm(range(2**15, 2**16 + 1), ncols=NCOL):
+        n_guess = math.gcd(pow_1 - access_token_1, pow_2 - access_token_2)
         if n_guess > access_token_1 and n_guess > access_token_2:
             pubkey_candidates.append((e_guess, n_guess))
 
@@ -131,18 +131,18 @@ def part_b():
     print_header("PUBLIC KEY CONFIRMED", NCOL, "-")
 
     # Get d
-    CLIENT_SOCKET.send(b'3')
+    CLIENT_SOCKET.send(b"3")
     admin_archive_number = get_admin_archive_number(CLIENT_SOCKET)
 
-    CLIENT_SOCKET.send(b'2')
-    get_all_messages(CLIENT_SOCKET, "Masukkan token akses nomor arsip (dalam bentuk integer): ")
+    CLIENT_SOCKET.send(b"2")
+    get_all_messages(
+        CLIENT_SOCKET, "Masukkan token akses nomor arsip (dalam bentuk integer): "
+    )
 
     CLIENT_SOCKET.send(str(pow(admin_archive_number, pubkey[0], pubkey[1])).encode())
     part_b_flag = get_flag(CLIENT_SOCKET)
     CLIENT_SOCKET.close()
     return part_b_flag
-    
-
 
 
 if __name__ == "__main__":

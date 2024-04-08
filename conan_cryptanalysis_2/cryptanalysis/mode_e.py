@@ -1,11 +1,7 @@
-from Crypto.Util.number import (
-    long_to_bytes, 
-    bytes_to_long, 
-    getStrongPrime, 
-    GCD
-)
+from Crypto.Util.number import long_to_bytes, bytes_to_long, getStrongPrime, GCD
 import random
-import decimal 
+import decimal
+
 
 def solve_mode_e(rsa_n, rsa_e, ciphertext):
     """
@@ -20,9 +16,10 @@ def solve_mode_e(rsa_n, rsa_e, ciphertext):
 
     return plaintext
 
+
 def main():
-    message_asli = "KRIPTOGRAFIITB{" + str(random.randint(1,10000))+ "}"
-    message_asli = message_asli.encode('utf-8')
+    message_asli = "KRIPTOGRAFIITB{" + str(random.randint(1, 10000)) + "}"
+    message_asli = message_asli.encode("utf-8")
     message_int = bytes_to_long(message_asli)
 
     n = getStrongPrime(1024)
@@ -31,6 +28,7 @@ def main():
 
     print(message_asli)
     print(solve_mode_e(n, e, enc))
+
 
 if __name__ == "__main__":
     main()
