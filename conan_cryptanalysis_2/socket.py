@@ -15,7 +15,7 @@ CHALLENGE_PATTERN = r'paket_soal = ([A-E])\s*n = (\d*)\s*e = (\d*)\s*c = (\d*)'
 
 def get_challenge(recv_socket: socket.socket):
     question = get_all_messages(recv_socket)
-    print(question, end='')
+    # print(question, end='')
 
     paket_soal, rsa_n, rsa_e, ciphertext = re.search(CHALLENGE_PATTERN, question).groups()
 
@@ -30,3 +30,15 @@ def get_access_token(recv_socket: socket.socket):
     msg = get_all_messages(recv_socket, "Masukkan perintah: ")
     access_token = re.search(ACCESS_TOKEN_PATTERN, msg).group(1)
     return int(access_token)
+
+ADMIN_ARCHIVE_PATTERN = r'Nomor arsip admin: (\d*)'
+def get_admin_archive_number(recv_socket: socket.socket):
+    msg = get_all_messages(recv_socket, "Masukkan perintah: ")
+    admin_archive_number = re.search(ADMIN_ARCHIVE_PATTERN, msg).group(1)
+    return int(admin_archive_number)
+
+FLAG_PATTERN = r'KRIPTOGRAFIITB{[a-z0-9]*}'
+def get_flag(recv_socket: socket.socket):
+    msg = get_all_messages(recv_socket, "}")
+    archive_content = re.search(FLAG_PATTERN, msg).group()
+    return archive_content
