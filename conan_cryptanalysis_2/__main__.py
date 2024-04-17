@@ -5,7 +5,7 @@ import math
 import time
 
 from conan_cryptanalysis_2.utils import print_header
-from conan_cryptanalysis_2.socket import (
+from conan_cryptanalysis_2.sockets import (
     get_all_messages,
     get_challenge,
     get_access_token,
