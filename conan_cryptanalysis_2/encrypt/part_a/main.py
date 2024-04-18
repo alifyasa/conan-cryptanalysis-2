@@ -11,8 +11,8 @@ print("Tips: buatlah kode untuk otomasi :D\n")
 counter = 0
 try:
     for step in range(tahap):
-        print(f"---------------- Tahap-{step}----------------\n") 
-        message_asli = "KRIPTOGRAFIITB{" + str(random.randint(1,10000))+ "}" 
+        print(f"---------------- Tahap-{step}----------------\n")
+        message_asli = "KRIPTOGRAFIITB{" + str(random.randint(1,10000))+ "}"
         message_asli = message_asli.encode('utf-8')
         message_int = bytes_to_long(message_asli)
         version = random.choice(paket_soal)
@@ -21,7 +21,7 @@ try:
             while True:
                 ran = random.randint(1, 100)
                 p = nextprime(getStrongPrime(1024) - ran)
-                q = nextprime(nextprime(nextprime(nextprime(p) + ran) + ran) - ran) 
+                q = nextprime(nextprime(nextprime(nextprime(p) + ran) + ran) - ran)
                 n = p*q
                 e = 65537
                 check = GCD(e, (p-1)*(q-1)) == 1
