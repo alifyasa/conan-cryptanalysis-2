@@ -12,7 +12,7 @@ from conan_cryptanalysis_2.sockets import (
     get_admin_archive_number,
     get_flag,
 )
-from conan_cryptanalysis_2.cryptanalysis import (
+from conan_cryptanalysis_2.modes import (
     solve_mode_a,
     solve_mode_b,
     solve_mode_c,

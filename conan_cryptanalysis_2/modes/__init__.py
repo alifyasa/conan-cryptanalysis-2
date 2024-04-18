@@ -1,0 +1,5 @@
+from conan_cryptanalysis_2.modes.mode_a import solve_mode_a
+from conan_cryptanalysis_2.modes.mode_b import solve_mode_b
+from conan_cryptanalysis_2.modes.mode_c import solve_mode_c
+from conan_cryptanalysis_2.modes.mode_d import solve_mode_d
+from conan_cryptanalysis_2.modes.mode_e import solve_mode_e
