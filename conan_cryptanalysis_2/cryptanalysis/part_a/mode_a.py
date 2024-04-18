@@ -16,8 +16,8 @@ def solve_mode_a(rsa_n, rsa_e, ciphertext):
         if rsa_n % factor_guess == 0:
             break
 
-    rsa_p = factor_guess
-    rsa_q = rsa_n // factor_guess
+    rsa_q = factor_guess
+    rsa_p = rsa_n // factor_guess
 
     rsa_tot = (rsa_p - 1) * (rsa_q - 1)
     rsa_d = pow(rsa_e, -1, rsa_tot)
